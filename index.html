@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- ... all meta tags, preload links, manifest links are the same ... -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Proscenium</title>
+    <title>Project Proscenium - The Reality</title>
     <link rel="preload" href="/fonts/NAGO.otf" as="font" type="font/otf" crossorigin>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<!-- The New Proscenium Frame -->
-<div class="proscenium-frame"></div>
+<!-- This is the 3D world, the distant environment -->
+<div class="scene-background">
+    <div id="anamnesis-grid" class="anamnesis-layer"></div>
+</div>
 
-<div class="aegis-app">
-    <!-- The rest of the app structure remains exactly the same -->
-    <main class="creation-canvas">
-         <div id="anamnesis-grid" class="anamnesis-layer"></div>
-        <!-- ... nav and content ... -->
-    </main>
-    <aside class="utility-panel">
-        <!-- ... utility panel content ... -->
-    </aside>
+<!-- This is the 2D UI that floats in front of the scene -->
+<div class="hud-foreground">
+    <div class="proscenium-frame"></div>
+    <div class="aegis-app">
+        <!-- The app structure is unchanged, but lives in the foreground now -->
+        <nav class="canvas-nav">
+             <h1 class="header">AEGIS</h1>
+            <h2 class="group-title">THE CHALLENGE</h2>
+            <a href="#" class="nav-item active" data-view="submission">My Submission</a>
+        </nav>
+        <main class="canvas-content">
+            <div id="submission" class="content-view active">
+                <h1 class="content-title">My<br>Submission</h1>
+                <a href="#" class="tell-more-btn">Upload Files</a>
+            </div>
+        </main>
+    </div>
 </div>
 
 <script src="app.js"></script>
