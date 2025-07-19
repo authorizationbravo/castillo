@@ -1,20 +1,16 @@
 /*
  * Project Proscenium: style.css
- * The Final Reality: Depth, Space, and Material
+ * The Corrected & Functional Reality
  */
 
-/* Font declarations remain the same */
 @font-face { font-family: 'NAGO'; src: url('fonts/NAGO.otf') format('opentype'); }
 @font-face { font-family: 'NAG'; src: url('fonts/NAG.ttf') format('truetype'); }
 
 :root {
-    --space-black: #0A0A0C; /* Deeper, more absolute black for the void */
-    --panel-black: #101012;
-    --border-subtle: rgba(255, 255, 255, 0.1);
+    --space-black: #0A0A0C;
     --text-primary: #E0E0E0;
     --text-secondary: #888;
-    --brand-glow: #3d9dff;
-    --font-heading: 'NAGO', serif; /* Assigning distinct fonts */
+    --font-heading: 'NAGO', serif;
     --font-ui: 'NAG', sans-serif;
 }
 
@@ -27,93 +23,86 @@ body {
     color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-
-    /* --- CREATING THE SCENE --- */
-    /* Recreating the "Spacial Gradient" */
-    background-image: 
-        radial-gradient(ellipse at 70% 30%, rgba(50, 60, 150, 0.15) 0%, transparent 50%),
-        radial-gradient(ellipse at 30% 80%, rgba(100, 80, 140, 0.1) 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.015) 0%, rgba(255,255,255,0.015) 1px, transparent 1px);
-    background-size: 100% 100%, 100% 100%, 4px 4px; /* The third layer is our starfield */
-
-    /* Establishing a 3D rendering context for all children */
-    perspective: 1000px;
 }
 
-/* The Proscenium Frame (from "BlackGold") */
+/* --- THE TWO WORLDS ARCHITECTURE --- */
+
+/* SCENE: The distant 3D environment */
+.scene-background {
+    position: absolute; inset: 0;
+    z-index: 0;
+    /* We apply the 3D context HERE */
+    perspective: 800px;
+    background-image: 
+        radial-gradient(ellipse at 70% 30%, rgba(50, 60, 150, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.015) 0%, rgba(255,255,255,0.015) 1px, transparent 1px);
+    background-size: 100% 100%, 3px 3px;
+}
+.anamnesis-layer {
+    position: absolute; inset: 0;
+    /* THE CRITICAL FIX: The scene itself must preserve 3D */
+    transform-style: preserve-3d;
+}
+.phrase {
+    position: absolute; /* Phrases will be added here by JS */
+    will-change: transform, opacity;
+    font-family: var(--font-ui);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 1.2rem;
+    /* Pushes the phrase deep into the scene */
+    transform: translateZ(-600px);
+}
+
+/* HUD: The flat 2D interface floating on top */
+.hud-foreground {
+    position: relative;
+    z-index: 10;
+    height: 100vh;
+}
 .proscenium-frame {
-    position: fixed;
+    position: absolute;
     inset: 12px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    z-index: 100;
-    pointer-events: none; /* Allows clicks to go through it */
+    pointer-events: none;
 }
-
-/* Core App now sits within the frame */
 .aegis-app {
-    position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 1fr; /* For now, let's simplify to show depth */
-    height: 100vh;
-}
-
-/* --- THE DEPTH LAYERS --- */
-
-/* The Anamnesis layer is pushed BACK into the Z-space */
-.anamnesis-layer {
-    position: absolute; inset: 0;
-    /* This pushes the text into the distance, making it feel part of the environment */
-    transform: translateZ(-500px) scale(1.5); 
-}
-.phrase {
-    position: absolute;
-    /* Make text more like stars */
-    font-size: 1.2rem;
-    font-family: var(--font-ui);
-    color: rgba(255, 255, 255, 0.4);
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-    opacity: 0;
-    /* Other animation properties */
-}
-.phrase.typing { opacity: 1; /* ... */ }
-
-/* The Main Content "HUD" - Floats in front of the Anamnesis */
-.creation-canvas, .utility-panel {
-    transform: translateZ(0); /* The default layer */
-    background: none;
+    height: 100%;
     padding: 3rem 4rem;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 3rem;
 }
+.canvas-nav .header { font-size: 1rem; color: #fff; margin-bottom: 2rem; }
+.canvas-nav .group-title { font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 1.5rem; }
+.canvas-nav a { text-decoration: none; display: block; margin-bottom: 1.5rem; color: var(--text-secondary); font-weight: bold; }
+.canvas-nav a.active { color: #fff; }
 
+.canvas-content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 .content-title {
     font-family: var(--font-heading);
     font-size: 8rem;
     line-height: 1;
     color: #fff;
     margin-bottom: 2rem;
-    text-align: center; /* Centered like "EARTH" */
 }
-
-/* "Tell Me More" Button Style (from "BlackGold") */
-/* Replaces our previous resource links */
 .tell-more-btn {
-    display: inline-block;
     background: transparent;
-    border: 1px solid var(--border-subtle);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     color: var(--text-primary);
     padding: 0.75rem 2rem;
     border-radius: 24px;
     cursor: pointer;
-    font-family: var(--font-ui);
     transition: all 0.3s ease;
-    
-    /* THE TACTILE INNER SHADOW */
-    box-shadow: inset 0 0 0 0px rgba(255,255,255,0.1);
 }
+.tell-more-btn:hover { border-color: #fff; box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); color: #fff; }
 
-.tell-more-btn:hover {
-    border-color: #fff;
-    box-shadow: inset 0 0 0 1px #fff; /* Inset glow on hover */
-    color: #fff;
-}
+/* JavaScript will add/remove these for the effect */
+.phrase.active { opacity: 1; }
+.phrase.inactive { opacity: 0; }
