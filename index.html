@@ -3,9 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the sophisticated reality of Project Proscenium.">
+    <meta name="keywords" content="Project Proscenium, Reality, Carlon, Challenge, DARVO">
+    <meta name="author" content="Your Name">
     <title>Project Proscenium - The Reality</title>
+
+    <!-- Preload fonts for better performance -->
     <link rel="preload" href="/fonts/monument-grotesk-regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" href="/fonts/HelveticaNeueETPro55Roman.TTF" as="font" type="font/ttf" crossorigin="anonymous">
+
+    <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <!-- The 3D world, the distant environment -->
@@ -21,19 +32,22 @@
             <nav class="canvas-nav" aria-label="Main navigation">
                 <h1 class="header">CARLON</h1>
                 <h2 class="group-title">THE CHALLENGE</h2>
-                <a href="#" class="nav-item active" data-view="submission" aria-current="page">DARVO</a>
+                <ul role="list">
+                    <li role="listitem"><a href="#" class="nav-item active" data-view="submission" aria-current="page">DARVO</a></li>
+                </ul>
             </nav>
 
             <!-- Main content -->
             <main class="canvas-content" role="main">
-                <div id="submission" class="content-view active">
+                <section id="submission" class="content-view active">
                     <h1 class="content-title"><span>My</span><span>Submission</span></h1>
-                    <a href="#" class="tell-more-btn" role="button">Upload Files</a>
-                </div>
+                    <a href="#" class="tell-more-btn" role="button" aria-label="Upload files">Upload Files</a>
+                </section>
             </main>
         </div>
     </div>
 
+    <!-- Scripts -->
     <script src="app.js"></script>
 </body>
 </html>
