@@ -2,6 +2,7 @@
     font-family: 'Monument';
     src: url('fonts/monument-grotesk-regular.ttf') format('truetype');
     font-display: swap;
+    font-weight: 300;
 }
 
 @font-face {
@@ -16,7 +17,8 @@
     --text-secondary: #888;
     --font-heading: 'Monument', serif;
     --font-ui: 'Monument', sans-serif;
-    --transition-speed: 0.3s;
+    --transition-speed: 0.5s;
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 * {
@@ -43,10 +45,10 @@ body {
     position: absolute;
     inset: 0;
     z-index: 0;
-    perspective: 1000px;
+    perspective: 1200px;
     background-image:
-        radial-gradient(ellipse at 70% 30%, rgba(50, 60, 150, 0.2) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        radial-gradient(ellipse at 70% 30%, rgba(50, 60, 150, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 100% 100%, 3px 3px;
 }
 
@@ -60,11 +62,11 @@ body {
     position: absolute;
     will-change: transform, opacity;
     font-family: var(--font-ui);
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 1.2rem;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.3rem;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     transform: translateZ(-600px);
-    transition: opacity var(--transition-speed) ease-in-out;
+    transition: opacity var(--transition-speed) var(--ease-in-out), transform var(--transition-speed) var(--ease-in-out);
 }
 
 /* HUD: The flat 2D interface floating on top */
@@ -77,45 +79,50 @@ body {
 .proscenium-frame {
     position: absolute;
     inset: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
     pointer-events: none;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
 }
 
 /* Layout and Typography */
 .aegis-app {
     height: 100%;
-    padding: 3rem 4rem;
+    padding: 4rem 5rem;
     display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 3rem;
+    grid-template-columns: 260px 1fr;
+    gap: 4rem;
 }
 
 .canvas-nav .header {
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: #fff;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     font-weight: 300;
+    letter-spacing: 1px;
 }
 
 .canvas-nav .group-title {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: var(--text-secondary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     font-weight: 300;
+    letter-spacing: 0.5px;
 }
 
 .canvas-nav a {
     text-decoration: none;
     display: block;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     color: var(--text-secondary);
     font-weight: 400;
-    transition: color var(--transition-speed) ease-in-out;
+    transition: color var(--transition-speed) var(--ease-in-out);
+    letter-spacing: 0.5px;
 }
 
 .canvas-nav a.active, .canvas-nav a:hover {
     color: #fff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
 }
 
 .canvas-content {
@@ -128,28 +135,32 @@ body {
 
 .content-title {
     font-family: var(--font-heading);
-    font-size: 8rem;
+    font-size: 9rem;
     line-height: 1;
     color: #fff;
-    margin-bottom: 2rem;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    margin-bottom: 3rem;
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+    letter-spacing: 2px;
 }
 
 /* Interactive Elements */
 .tell-more-btn {
-    background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     color: var(--text-primary);
-    padding: 0.75rem 2rem;
-    border-radius: 24px;
+    padding: 1rem 2.5rem;
+    border-radius: 30px;
     cursor: pointer;
-    transition: all var(--transition-speed) ease-in-out;
+    transition: all var(--transition-speed) var(--ease-in-out);
     font-weight: 300;
+    letter-spacing: 1px;
+    backdrop-filter: blur(5px);
 }
 
 .tell-more-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
     border-color: #fff;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
     color: #fff;
 }
 
