@@ -4,35 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Proscenium - The Reality</title>
-    <link rel="preload" href="/fonts/monument-grotesk-regular.ttf" as="font" type="font/ttf" crossorigin>
+    <link rel="preload" href="/fonts/monument-grotesk-regular.ttf" as="font" type="font/ttf" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-<!-- This is the 3D world, the distant environment -->
-<div class="scene-background">
-    <div id="anamnesis-grid" class="anamnesis-layer"></div>
-</div>
-
-<!-- This is the 2D UI that floats in front of the scene -->
-<div class="hud-foreground">
-    <div class="proscenium-frame"></div>
-    <div class="aegis-app">
-        <!-- The app structure is unchanged, but lives in the foreground now -->
-        <nav class="canvas-nav">
-             <h1 class="header">CARLON</h1>
-            <h2 class="group-title">THE CHALLENGE</h2>
-            <a href="#" class="nav-item active" data-view="submission">DARVO</a>
-        </nav>
-        <main class="canvas-content">
-            <div id="submission" class="content-view active">
-                <h1 class="content-title">My<br>Submission</h1>
-                <a href="#" class="tell-more-btn">Upload Files</a>
-            </div>
-        </main>
+    <!-- The 3D world, the distant environment -->
+    <div class="scene-background" role="region" aria-label="Background scene">
+        <div id="anamnesis-grid" class="anamnesis-layer"></div>
     </div>
-</div>
 
-<script src="app.js"></script>
+    <!-- The 2D UI that floats in front of the scene -->
+    <div class="hud-foreground">
+        <div class="proscenium-frame" aria-hidden="true"></div>
+        <div class="aegis-app">
+            <!-- Navigation -->
+            <nav class="canvas-nav" aria-label="Main navigation">
+                <h1 class="header">CARLON</h1>
+                <h2 class="group-title">THE CHALLENGE</h2>
+                <a href="#" class="nav-item active" data-view="submission" aria-current="page">DARVO</a>
+            </nav>
+
+            <!-- Main content -->
+            <main class="canvas-content" role="main">
+                <div id="submission" class="content-view active">
+                    <h1 class="content-title"><span>My</span><span>Submission</span></h1>
+                    <a href="#" class="tell-more-btn" role="button">Upload Files</a>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
 </html>
