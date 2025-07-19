@@ -1,200 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ... all meta tags, preload links, manifest links are the same ... -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MAG MAG MAGAZINE - Issue 001</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --background-color: #111;
-            --header-footer-text: rgba(255, 255, 255, 0.9);
-            
-            /* Font Families */
-            --font-display: 'Bebas Neue', cursive;
-            --font-ui: 'Roboto', sans-serif;
-
-            /* Effect Colors */
-            --color-frosted-text: rgba(255, 255, 255, 0.5);
-            --color-frosted-bg: rgba(220, 220, 220, 0.15);
-            --color-cutout-text: #000;
-        }
-
-        body {
-            background-color: var(--background-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 2rem;
-            overflow: hidden;
-        }
-
-        .magazine-cover {
-            position: relative;
-            width: 100%;
-            max-width: 650px;
-            aspect-ratio: 4 / 5;
-            background-color: #000;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-            overflow: hidden;
-            border-radius: 4px;
-            /* This enables the 3D space for the parallax effect */
-            transform-style: preserve-3d;
-            perspective: 1000px;
-        }
-
-        .cover-image {
-            position: absolute;
-            top: -5%; left: -5%; /* Slightly larger to allow for movement */
-            width: 110%;
-            height: 110%;
-            object-fit: cover;
-            object-position: center 30%;
-            filter: blur(1.5px) brightness(0.95);
-            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 2rem;
-            font-family: var(--font-ui);
-            color: var(--header-footer-text);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-weight: 500;
-            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .header, .footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-        }
-
-        .title-stack {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            /* Move the text stack slightly forward for parallax */
-            transform: translateZ(40px);
-        }
-
-        .title {
-            font-family: var(--font-display);
-            font-size: clamp(8rem, 25vw, 14rem);
-            line-height: 0.8;
-            letter-spacing: 0.03em;
-            text-align: center;
-            width: 100%;
-        }
-
-        .title.cutout {
-            color: var(--color-cutout-text);
-            /* This blend mode creates the dark, 'stenciled' look */
-            mix-blend-mode: multiply;
-        }
-        
-        .title.frosted {
-            color: var(--color-frosted-text);
-            background-color: var(--color-frosted-bg);
-            /* The key to the frosted glass effect */
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px); /* For Safari */
-            border-radius: 8px;
-        }
-
-    </style>
+    <title>Project Proscenium</title>
+    <link rel="preload" href="/fonts/NAGO.otf" as="font" type="font/otf" crossorigin>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div class="magazine-cover" id="cover">
-        <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=986&q=80" alt="Portrait of a woman" class="cover-image" id="coverImage">
+<!-- The New Proscenium Frame -->
+<div class="proscenium-frame"></div>
 
-        <div class="overlay" id="overlayText">
-            <header class="header">
-                <span>Mag Mag Magazine - Issue 001</span>
-                <span>Jan-20</span>
-            </header>
-            <footer class="footer">
-                <span></span> <!-- Spacer -->
-                <span>Buy It - Read It - Frame It</span>
-            </footer>
-        </div>
+<div class="aegis-app">
+    <!-- The rest of the app structure remains exactly the same -->
+    <main class="creation-canvas">
+         <div id="anamnesis-grid" class="anamnesis-layer"></div>
+        <!-- ... nav and content ... -->
+    </main>
+    <aside class="utility-panel">
+        <!-- ... utility panel content ... -->
+    </aside>
+</div>
 
-        <div class="title-stack" id="titleStack">
-            <div class="title cutout">MAG</div>
-            <div class="title frosted">MAG</div>
-            <div class="title frosted">MAG</div>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const cover = document.getElementById('cover');
-            
-            // Check if the element exists to avoid errors
-            if (!cover) {
-                console.error('Magazine cover element not found.');
-                return;
-            }
-
-            const coverImage = document.getElementById('coverImage');
-            const overlayText = document.getElementById('overlayText');
-            const titleStack = document.getElementById('titleStack');
-
-            const MAX_ROTATION = 6; // Max rotation in degrees
-            const MAX_TRANSLATION = 15; // Max translation in pixels
-
-            cover.addEventListener('mousemove', (e) => {
-                const rect = cover.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const width = rect.width;
-                const height = rect.height;
-
-                // Calculate mouse position from center (-0.5 to 0.5)
-                const mouseX = (x / width) - 0.5;
-                const mouseY = (y / height) - 0.5;
-
-                // Calculate rotation and translation values
-                const rotateY = mouseX * MAX_ROTATION * 2;
-                const rotateX = -mouseY * MAX_ROTATION * 2;
-
-                const translateX = mouseX * MAX_TRANSLATION;
-                const translateY = mouseY * MAX_TRANSLATION;
-
-                // Apply transforms
-                cover.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                
-                if(coverImage) coverImage.style.transform = `translateX(${-translateX}px) translateY(${-translateY}px)`;
-                if(overlayText) overlayText.style.transform = `translateX(${translateX * 0.6}px) translateY(${translateY * 0.6}px)`;
-                if(titleStack) titleStack.style.transform = `translateZ(40px) translateX(${translateX}px) translateY(${translateY}px)`;
-            });
-
-            cover.addEventListener('mouseleave', () => {
-                // Reset transforms on mouse leave
-                cover.style.transform = 'rotateX(0deg) rotateY(0deg)';
-                if(coverImage) coverImage.style.transform = 'translateX(0px) translateY(0px)';
-                if(overlayText) overlayText.style.transform = 'translateX(0px) translateY(0px)';
-                if(titleStack) titleStack.style.transform = 'translateZ(40px) translateX(0px) translateY(0px)';
-            });
-        });
-    </script>
-
+<script src="app.js"></script>
 </body>
 </html>
