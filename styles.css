@@ -1,29 +1,29 @@
 /* === FONT FACES === */
 @font-face {
-    font-family: 'NAGO';
-    src: url('fonts/NAGO.otf') format('opentype');
+    font-family: 'HelveticaNeueETPro55Roman';
+    src: url('fonts/HelveticaNeueETPro55Roman.TTF') format('opentype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'NAG';
-    src: url('fonts/NAG.ttf') format('truetype');
+    font-family: 'HelveticaNeueETPro55Roman';
+    src: url('fonts/HelveticaNeueETPro55Roman.TTF') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
-    font-family: 'Alte Haas Grotesk';
-    src: url('fonts/AlteHaasGroteskRegular.ttf') format('truetype');
+    font-family: 'HelveticaNeueETPro55Roman';
+    src: url('fonts/HelveticaNeueETPro55Roman.TTF') format('truetype');
     font-weight: normal;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Alte Haas Grotesk';
-    src: url('fonts/AlteHaasGroteskBold.ttf') format('truetype');
+    font-family: 'monument-grotesk-regular';
+    src: url('fonts/monument-grotesk-regular.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
     font-display: swap;
@@ -45,7 +45,7 @@
     --text-primary-glow: #EAEAEA;
     --text-secondary-dark: #767676;
     --brand-active: #0091FF;
-    --font-main: 'Alte Haas Grotesk', 'Helvetica Neue ET Pro', Arial, sans-serif;
+    --font-main: 'HelveticaNeueETPro55Roman', 'monument-grotesk-regular', sans-serif;
 }
 
 /* === BASE STYLES === */
