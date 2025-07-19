@@ -1,774 +1,256 @@
 <!DOCTYPE html>
-<html lang="en" class="dark-mode">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHER - Next Generation Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Marco Resmann - De-Vision 014</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* === FONT FACES (Unchanged as per request) === */
-        @font-face {
-            font-family: 'HelveticaNeueETPro55Roman';
-            src: url('fonts/HelveticaNeueETPro55Roman.TTF') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-        
-        @font-face {
-            font-family: 'monument-grotesk-regular';
-            src: url('fonts/monument-grotesk-regular.TTF') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
-
-        /* === REFINED CSS VARIABLES === */
+        /* --- Root Variables for Easy Theming --- */
         :root {
-            /* Expanded Slate Palette for more depth */
-            --slate-900: #0f172a;
-            --slate-800: #1e293b;
-            --slate-700: #334155;
-            --slate-600: #475569;
+            --background-color: #000;
+            --base-text-color: #1a1a1a;
+            --poster-background: #dcdbd9;
             
-            /* Strategic Accent Colors */
-            --teal-accent: #00d1d1;
-            --blue-accent: #0091ff;
-            --purple-accent: #9f7aea; /* Added for variety */
-            --red-accent: #ff6b6b;   /* Added for variety */
+            /* Gradient Colors from the Poster */
+            --color-blob-1: #a9b4c8; /* Dusty Blue */
+            --color-blob-2: #8a9cb7; /* Deeper Blue */
+            --color-blob-3: #e0dcd1; /* Warm Off-White */
             
-            /* Text Colors */
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            
-            /* Layered Paper & Glassmorphism Colors */
-            --paper-1: rgba(30, 41, 59, 0.8); /* Adjusted alpha for glass effect */
-            --paper-2: rgba(26, 36, 55, 0.7);
-            --paper-3: rgba(23, 32, 51, 0.6);
-            
-            /* Softer, Layered Shadows */
-            --shadow-heavy: 0 25px 50px -12px rgba(0, 0, 0, 0.45);
-            --shadow-medium: 0 10px 30px -10px rgba(0, 0, 0, 0.35);
-            --shadow-light: 0 4px 15px -5px rgba(0, 0, 0, 0.25);
-            
-            /* Grid Background */
-            --grid-line-color: rgba(71, 85, 105, 0.1);
+            --font-main: 'Inter', sans-serif;
         }
 
-        /* === IMMERSIVE BACKGROUND === */
-        .background-animation {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(145deg, var(--slate-900) 0%, #0d1525 100%);
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .background-animation::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                linear-gradient(var(--grid-line-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-line-color) 1px, transparent 1px);
-            background-size: 40px 40px;
-            animation: moveGrid 50s infinite linear;
-            opacity: 0.5;
-        }
-
-        @keyframes moveGrid {
-            from { transform: translate(0, 0); }
-            to { transform: translate(-40px, -40px); }
-        }
-
-        /* === BASE STYLES & TYPOGRAPHY === */
+        /* --- Base & Body Styles --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            transition: 
-                background-color 0.4s ease, 
-                color 0.4s ease,
-                transform 0.3s cubic-bezier(0.19, 1, 0.22, 1),
-                box-shadow 0.4s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
         body {
-            font-family: 'HelveticaNeueETPro55Roman', 'Helvetica Neue', Arial, sans-serif;
-            background-color: var(--slate-900);
-            color: var(--text-primary);
-            line-height: 1.6;
-            padding: 2rem;
-            min-height: 100vh;
+            font-family: var(--font-main);
+            background-color: var(--background-color);
+            color: var(--base-text-color);
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align to top for better feel */
-            overflow: auto;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
         }
 
-        h1, h2, h3, h4, .logo, .btn {
-            font-family: 'monument-grotesk-regular', 'Helvetica Neue', Arial, sans-serif;
-            font-weight: 400;
-            letter-spacing: -0.5px;
+        /* --- Main Poster Container & Layout --- */
+        .poster-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px; /* A good width for poster display */
+            aspect-ratio: 1 / 1.414; /* A-series paper aspect ratio */
+            background-color: var(--poster-background);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr auto;
+            padding: 4rem;
+            overflow: hidden; /* This is crucial to contain the blobs */
         }
         
-        /* === MAIN LAYOUT & CONTAINER === */
-        .dashboard-container {
-            width: 100%;
-            max-width: 1400px;
-            display: grid;
-            grid-template-columns: 260px 1fr;
-            gap: 30px;
-        }
-
-        /* === HEADER === */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            margin-bottom: 2rem;
-            grid-column: 1 / -1;
-            position: relative;
-            border-bottom: 1px solid rgba(71, 85, 105, 0.3);
-        }
-
-        .logo {
-            font-size: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .logo i {
-            color: var(--teal-accent);
-            text-shadow: 0 0 15px rgba(0, 209, 209, 0.5);
-        }
-
-        .theme-toggle {
-            background: var(--paper-1);
-            border: 1px solid rgba(71, 85, 105, 0.3);
-            border-radius: 30px;
-            padding: 0.7rem 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            box-shadow: var(--shadow-medium);
-            position: relative;
-            z-index: 2;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-        }
-
-        .theme-toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* === NAVIGATION PANEL === */
-        .nav-panel {
-            background: var(--paper-1);
-            border-radius: 20px;
-            padding: 1.8rem;
-            box-shadow: var(--shadow-heavy);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(71, 85, 105, 0.2);
-            position: sticky; /* Make nav sticky */
-            top: 2rem;
-        }
-
-        .nav-header {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(71, 85, 105, 0.3);
-        }
-
-        .nav-header h2 {
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-secondary);
-        }
-
-        .nav-item {
-            display: flex;
-            align-items: center;
-            padding: 0.9rem;
-            border-radius: 10px;
-            margin-bottom: 0.5rem;
-            cursor: pointer;
-            font-size: 0.95rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-item::before {
-            content: '';
+        /* --- The Ethereal, Animated Gradient Background --- */
+        .gradient-background {
             position: absolute;
             top: 0;
             left: 0;
-            width: 4px;
+            width: 100%;
             height: 100%;
-            background: var(--teal-accent);
-            transform: scaleY(0);
-            transform-origin: center;
-            transition: transform 0.3s ease;
+            overflow: hidden;
+            filter: blur(80px); /* The magic happens here */
+            z-index: 0;
         }
 
-        .nav-item:hover {
-            background: rgba(255, 255, 255, 0.05);
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            mix-blend-mode: multiply; /* Blends the colors nicely */
+            opacity: 0.8;
+            animation: drift 25s infinite alternate ease-in-out;
+        }
+
+        .blob1 {
+            width: 400px;
+            height: 400px;
+            top: -50px;
+            left: -100px;
+            background: var(--color-blob-1);
         }
         
-        .nav-item:hover::before, .nav-item.active::before {
-            transform: scaleY(1);
-        }
-        
-        .nav-item.active {
-            background: rgba(0, 145, 255, 0.1);
-            color: white;
-        }
-        
-        .nav-item i {
-            font-size: 1.2rem;
-            width: 40px;
-            text-align: center;
-            transition: transform 0.3s ease;
-            color: var(--text-secondary);
-        }
-
-        .nav-item:hover i, .nav-item.active i {
-            transform: scale(1.1);
-            color: var(--teal-accent);
-        }
-
-        /* === CONTENT PANEL === */
-        .content-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 2.5rem; /* Increased gap */
-        }
-        
-        .dashboard-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-
-        .dashboard-header h1 {
-            font-size: 2.8rem;
-        }
-
-        .search-bar {
-            background: var(--paper-2);
-            border: 1px solid rgba(71, 85, 105, 0.3);
-            border-radius: 12px;
-            padding: 0.8rem 1.3rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .blob2 {
             width: 350px;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            transition: all 0.3s ease;
+            height: 350px;
+            top: 10%;
+            left: 40%;
+            background: var(--color-blob-2);
+            animation-delay: -8s;
+            animation-duration: 20s;
+        }
+
+        .blob3 {
+            width: 300px;
+            height: 300px;
+            bottom: -150px;
+            right: -100px;
+            background: var(--color-blob-3);
+            animation-delay: -15s;
+            animation-duration: 30s;
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                transform: translate(40px, 60px) scale(1.2);
+            }
         }
         
-        .search-bar:focus-within {
-             box-shadow: 0 0 0 2px rgba(0, 145, 255, 0.4);
-             border-color: rgba(0, 145, 255, 0.5);
-        }
-
-        .search-bar input {
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            flex-grow: 1;
-            font-size: 1rem;
-            font-family: 'HelveticaNeueETPro55Roman', 'Helvetica Neue', Arial, sans-serif;
-        }
-
-        .search-bar input:focus {
-            outline: none;
-        }
-
-        /* === STATS CARDS (ELEVATED) === */
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.8rem;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, var(--slate-800), var(--slate-700));
-            border-radius: 16px;
-            padding: 1.8rem;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(71, 85, 105, 0.3);
-            box-shadow: var(--shadow-medium);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-heavy);
-            border-color: rgba(0, 209, 209, 0.5);
-        }
-        
-        .stat-card::after { /* Subtle glow effect */
-            content: '';
+        /* --- Subtle Grain Overlay --- */
+        .grain-overlay {
             position: absolute;
-            top: 0; right: 0;
-            width: 150px; height: 150px;
-            background: radial-gradient(circle, rgba(0, 209, 209, 0.15), transparent 70%);
-            transition: all 0.5s ease;
-            opacity: 0;
-            transform: scale(0);
-        }
-        
-        .stat-card:hover::after {
-            opacity: 1;
-            transform: scale(1.5);
-        }
-
-        .stat-card i {
-            font-size: 2rem;
-            margin-bottom: 1.2rem;
-            color: var(--teal-accent);
-        }
-
-        .stat-card h3 {
-            font-size: 2.5rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .stat-card p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-
-        /* === CONTENT SECTION & PROJECT CARDS === */
-        .content-section {
-            background: var(--paper-1);
-            border-radius: 20px;
-            padding: 2rem;
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid rgba(71, 85, 105, 0.2);
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.8rem;
-        }
-
-        .section-header h2 {
-            font-size: 1.5rem;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, var(--teal-accent) 0%, var(--blue-accent) 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            padding: 0.8rem 1.8rem;
-            font-size: 0.95rem;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 209, 209, 0.2);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn::after { /* Shine effect */
-            content: '';
-            position: absolute;
-            top: 0; left: -150%;
-            width: 100%; height: 100%;
-            transform: skewX(-25deg);
-            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
-            transition: left 0.6s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 25px rgba(0, 209, 209, 0.3);
-        }
-        
-        .btn:hover::after {
-            left: 150%;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.8rem;
-        }
-
-        .project-card {
-            background: var(--paper-2);
-            border-radius: 16px;
-            padding: 1.5rem;
-            border: 1px solid rgba(71, 85, 105, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .project-card:hover {
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: var(--shadow-medium);
-            border-color: rgba(0, 145, 255, 0.5);
-        }
-
-        .project-card h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.8rem;
-        }
-
-        .project-card p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        .project-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .team-members { display: flex; }
-
-        .team-members img {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            border: 2px solid var(--slate-900);
-            margin-left: -10px;
-        }
-
-        .progress-bar {
-            height: 8px;
-            background: rgba(15, 23, 42, 0.6);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 1rem;
-        }
-
-        .progress {
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, var(--teal-accent), var(--blue-accent));
-            border-radius: 4px;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiGAAAAA1BMVEX///+nxBvIAAAAIElEQVR42mP4BwYY/4GBgYWBgYGBgQE2kn8ZECIEGABGAgAyQQY1KgCiYAAAAABJRU5ErkJggg==');
+            opacity: 0.08;
+            z-index: 1;
         }
 
-        /* === ACTIVITY LIST === */
-        .activity-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        /* --- Typography & Content Styling --- */
+        .poster-container > * {
+            position: relative;
+            z-index: 2; /* Ensure content is above the grain and background */
         }
 
-        .activity-item {
-            display: flex;
-            gap: 1rem;
-            padding: 1rem;
-            border-radius: 12px;
-            background: transparent;
-            border-bottom: 1px solid rgba(71, 85, 105, 0.2);
+        .event-header {
+            grid-column: 2 / 3;
+            grid-row: 1 / 2;
+            text-align: right;
+            font-weight: 700;
+            font-size: 1.1rem;
+            line-height: 1.2;
+            align-self: start;
+        }
+        
+        .date {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            text-align: right;
+            align-self: center;
+            transform: translateY(-4rem);
         }
 
-        .activity-item:hover {
-            background: rgba(255, 255, 255, 0.03);
+        .artist-name {
+            grid-column: 1 / 3;
+            grid-row: 2 / 3;
+            align-self: center;
+            font-weight: 700;
+            font-size: 6rem;
+            line-height: 1.0;
+            letter-spacing: -0.03em;
         }
-
-        .avatar {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
-
-        .activity-details p {
+        
+        .record-labels {
+            grid-column: 2 / 3;
+            grid-row: 2 / 3;
+            align-self: center;
+            text-align: right;
             font-size: 0.9rem;
-            color: var(--text-secondary);
+            line-height: 1.4;
+            transform: translateY(4.5rem);
+        }
+
+        .event-footer {
+            grid-column: 2 / 3;
+            grid-row: 3 / 4;
+            align-self: end;
+            text-align: right;
+        }
+        
+        .event-footer h2 {
+            font-weight: 700;
+            font-size: 1.8rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        
+        .event-footer .details p {
+            font-size: 0.8rem;
             line-height: 1.5;
         }
-
-        .activity-time {
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-            padding-top: 0.3rem;
-        }
-
-        /* === FOOTER === */
-        footer {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 2rem 0;
-            color: var(--text-secondary);
-            margin-top: 2rem;
-            border-top: 1px solid rgba(71, 85, 105, 0.3);
-            font-size: 0.9rem;
-        }
-
-        /* === RESPONSIVE ADJUSTMENTS === */
-        @media (max-width: 1100px) {
-            .dashboard-container {
-                grid-template-columns: 1fr;
+        
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem;
             }
-            .nav-panel {
-                position: relative; /* Unstick nav panel */
-                top: 0;
-                margin-bottom: 2rem;
+            .poster-container {
+                padding: 2rem;
+            }
+            .artist-name {
+                font-size: 4rem;
+            }
+            .event-footer h2 {
+                font-size: 1.5rem;
+            }
+            .record-labels {
+                 transform: translateY(3.5rem);
+            }
+        }
+        @media (max-width: 400px) {
+             .artist-name {
+                font-size: 3rem;
+            }
+             .record-labels {
+                 display: none; /* Hide for very small screens to avoid clutter */
             }
         }
 
-        @media (max-width: 768px) {
-            body { padding: 1rem; }
-            .dashboard-container { gap: 20px; }
-            .stats-container, .projects-grid { grid-template-columns: 1fr; }
-            .dashboard-header h1 { font-size: 2.2rem; }
-            .search-bar { width: 100%; }
-        }
     </style>
 </head>
 <body>
 
-    <div class="background-animation"></div>
+    <div class="poster-container">
+        <!-- Background Elements -->
+        <div class="gradient-background">
+            <div class="blob blob1"></div>
+            <div class="blob blob2"></div>
+            <div class="blob blob3"></div>
+        </div>
+        <div class="grain-overlay"></div>
 
-    <div class="dashboard-container">
-        <header>
-            <div class="logo">
-                <i class="fas fa-rocket"></i>
-                <span>AETHER</span>
-            </div>
-            <div class="theme-toggle" id="themeToggle">
-                <i class="fas fa-sun"></i>
-                <span>Light Mode</span>
-            </div>
+        <!-- Content Elements -->
+        <header class="event-header">
+            <p>De—<br>Vision<br>014</p>
         </header>
 
-        <div class="nav-panel">
-            <div class="nav-header">
-                <h2>MENU</h2>
-            </div>
-            <div class="nav-item active">
-                <i class="fas fa-home"></i>
-                <span>Dashboard</span>
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-chart-pie"></i>
-                <span>Analytics</span>
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-project-diagram"></i>
-                <span>Projects</span>
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-users"></i>
-                <span>Team</span>
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-cog"></i>
-                <span>Settings</span>
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-calendar-alt"></i>
-                <span>Calendar</span>
-            </div>
-            <div class="nav-item">
-                <i class="fas fa-bell"></i>
-                <span>Notifications</span>
-            </div>
+        <p class="date">24-4-15</p>
+
+        <h1 class="artist-name">Marco<br>Resmann</h1>
+
+        <div class="record-labels">
+            <p>Mobilee</p>
+            <p>Moon Harbour</p>
+            <p>Watergate Records</p>
         </div>
 
-        <div class="content-panel">
-            <div class="dashboard-header">
-                <h1>Dashboard</h1>
-                <div class="search-bar">
-                    <i class="fas fa-search" style="color: var(--text-secondary);"></i>
-                    <input type="text" placeholder="Search anything...">
-                </div>
+        <footer class="event-footer">
+            <h2>Vnc<br>Brg</h2>
+            <div class="details">
+                <p>From 11.30 PM</p>
+                <p>Limited capacity</p>
+                <p>Ingresso riservato ai soli soci</p>
             </div>
-
-            <div class="stats-container">
-                <div class="stat-card">
-                    <i class="fas fa-folder-open"></i>
-                    <h3>142</h3>
-                    <p>Total Projects</p>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-tasks"></i>
-                    <h3>87</h3>
-                    <p>Active Tasks</p>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-user-friends"></i>
-                    <h3>24</h3>
-                    <p>Team Members</p>
-                </div>
-                <div class="stat-card">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>+12%</h3>
-                    <p>Productivity</p>
-                </div>
-            </div>
-
-            <div class="content-section">
-                <div class="section-header">
-                    <h2>Active Projects</h2>
-                    <button class="btn">Create New</button>
-                </div>
-                <div class="projects-grid">
-                     <div class="project-card">
-                        <h3>Website Redesign</h3>
-                        <p>Complete overhaul of company website with modern design and improved UX.</p>
-                        <div class="project-meta">
-                            <div class="team-members">
-                                <img src="https://i.pravatar.cc/150?img=5" alt="Team member">
-                                <img src="https://i.pravatar.cc/150?img=6" alt="Team member">
-                                <img src="https://i.pravatar.cc/150?img=7" alt="Team member">
-                            </div>
-                            <span style="color:var(--text-secondary)">75%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 75%"></div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <h3>Mobile App Development</h3>
-                        <p>iOS and Android application for customer engagement and support.</p>
-                        <div class="project-meta">
-                            <div class="team-members">
-                                <img src="https://i.pravatar.cc/150?img=8" alt="Team member">
-                                <img src="https://i.pravatar.cc/150?img=9" alt="Team member">
-                            </div>
-                            <span style="color:var(--text-secondary)">45%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 45%"></div>
-                        </div>
-                    </div>
-                     <div class="project-card">
-                        <h3>Marketing Campaign</h3>
-                        <p>Q3 social media and email marketing campaign preparation.</p>
-                        <div class="project-meta">
-                            <div class="team-members">
-                                <img src="https://i.pravatar.cc/150?img=10" alt="Team member">
-                                <img src="https://i.pravatar.cc/150?img=11" alt="Team member">
-                            </div>
-                           <span style="color:var(--text-secondary)">90%</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress" style="width: 90%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="content-section">
-                <div class="section-header">
-                    <h2>Recent Activity</h2>
-                    <button class="btn" style="background: var(--slate-700);">View All</button>
-                </div>
-                <div class="activity-list">
-                    <div class="activity-item">
-                        <div class="avatar" style="background: var(--blue-accent);">
-                            <i class="fas fa-plus"></i>
-                        </div>
-                        <div class="activity-details">
-                            <h3>Sarah Johnson created a new task in <span style="color: var(--teal-accent);">Website Redesign</span></h3>
-                            <div class="activity-time">2 hours ago</div>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="avatar" style="background: var(--teal-accent);">
-                            <i class="fas fa-check"></i>
-                        </div>
-                        <div class="activity-details">
-                            <h3>Michael Chen completed a task</h3>
-                            <p>Finished "Payment gateway integration" for API project</p>
-                            <div class="activity-time">5 hours ago</div>
-                        </div>
-                    </div>
-                     <div class="activity-item">
-                        <div class="avatar" style="background: var(--red-accent);">
-                            <i class="fas fa-comment-dots"></i>
-                        </div>
-                        <div class="activity-details">
-                            <h3>Alex Morgan left a comment</h3>
-                            <p>"We need to reconsider the color scheme for the mobile app."</p>
-                            <div class="activity-time">Yesterday, 3:45 PM</div>
-                        </div>
-                    </div>
-                     <div class="activity-item">
-                        <div class="avatar" style="background: var(--purple-accent);">
-                            <i class="fas fa-file-upload"></i>
-                        </div>
-                        <div class="activity-details">
-                           <h3>Emma Rodriguez uploaded a file to <span style="color: var(--teal-accent);">Marketing Campaign</span></h3>
-                            <div class="activity-time">Yesterday, 10:30 AM</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            <p>© 2025 AETHER. A New Era of Productivity.</p>
         </footer>
+
     </div>
 
-    <script>
-        // JS functionality remains robust and unchanged.
-        document.addEventListener('DOMContentLoaded', () => {
-            const themeToggle = document.getElementById('themeToggle');
-            const body = document.body;
-            
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'light') {
-                body.classList.remove('dark-mode');
-                updateToggleText(false);
-            } else {
-                body.classList.add('dark-mode');
-                updateToggleText(true);
-            }
-            
-            themeToggle.addEventListener('click', () => {
-                body.classList.toggle('dark-mode');
-                const isDarkMode = body.classList.contains('dark-mode');
-                localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-                updateToggleText(isDarkMode);
-            });
-            
-            function updateToggleText(isDarkMode) {
-                const icon = themeToggle.querySelector('i');
-                const text = themeToggle.querySelector('span');
-                if (isDarkMode) {
-                    icon.className = 'fas fa-sun';
-                    text.textContent = 'Light Mode';
-                } else {
-                    icon.className = 'fas fa-moon';
-                    text.textContent = 'Dark Mode';
-                }
-            }
-        });
-    </script>
 </body>
 </html>
