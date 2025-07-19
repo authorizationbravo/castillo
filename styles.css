@@ -3,15 +3,15 @@
  * The Corrected & Functional Reality
  */
 
-@font-face { font-family: 'NAGO'; src: url('fonts/NAGO.otf') format('opentype'); }
-@font-face { font-family: 'NAG'; src: url('fonts/NAG.ttf') format('truetype'); }
+@font-face { font-family: 'monument'; src: url('fonts/monument-grotesk-regular.ttf') format('truetype'); }
+@font-face { font-family: 'helvetica'; src: url('fonts/HelveticaNeueETPro55Roman.TTF') format('truetype'); }
 
 :root {
     --space-black: #0A0A0C;
     --text-primary: #E0E0E0;
     --text-secondary: #888;
-    --font-heading: 'NAGO', serif;
-    --font-ui: 'NAG', sans-serif;
+    --font-heading: 'monument', serif;
+    --font-ui: 'monument', sans-serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
