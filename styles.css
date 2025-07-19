@@ -1,0 +1,275 @@
+/* === FONT FACES === */
+@font-face {
+    font-family: 'NAGO';
+    src: url('fonts/NAGO.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'NAG';
+    src: url('fonts/NAG.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Alte Haas Grotesk';
+    src: url('fonts/AlteHaasGroteskRegular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Alte Haas Grotesk';
+    src: url('fonts/AlteHaasGroteskBold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Helvetica Neue ET Pro';
+    src: url('fonts/HelveticaNeueETPro55Roman.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* === CSS VARIABLES === */
+:root {
+    --background-charcoal: #111111;
+    --panel-charcoal: #1A1A1A;
+    --border-charcoal: rgba(255, 255, 255, 0.1);
+    --text-primary-glow: #EAEAEA;
+    --text-secondary-dark: #767676;
+    --brand-active: #0091FF;
+    --font-main: 'Alte Haas Grotesk', 'Helvetica Neue ET Pro', Arial, sans-serif;
+}
+
+/* === BASE STYLES === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: var(--background-charcoal);
+    font-family: var(--font-main);
+    color: var(--text-primary-glow);
+    cursor: default;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.matrix-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #0f0;
+    font-family: monospace;
+    font-size: 16px;
+    line-height: 20px;
+    overflow: hidden;
+    z-index: -2;
+    white-space: nowrap;
+}
+
+.aegis-app {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    height: 100vh;
+}
+
+.creation-canvas {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    padding: 3rem;
+}
+
+.canvas-nav, .canvas-content {
+    position: relative;
+    z-index: 2;
+}
+
+.canvas-nav {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.canvas-content {
+    overflow-y: auto;
+}
+
+.header {
+    font-weight: 700;
+    color: var(--text-primary-glow);
+}
+
+.group-title {
+    color: var(--text-secondary-dark);
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.nav-item {
+    display: block;
+    padding: 0.8rem 0;
+    color: var(--text-secondary-dark);
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+    color: var(--text-primary-glow);
+}
+
+.nav-item.active {
+    color: var(--brand-active);
+}
+
+.content-title {
+    font-size: 6rem;
+    line-height: 1;
+    color: var(--text-primary-glow);
+    margin-bottom: 2rem;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.content-view {
+    display: none;
+}
+
+.content-view.active {
+    display: block;
+}
+
+.utility-panel {
+    padding: 3rem 2rem;
+    background: var(--background-charcoal);
+    border-left: 1px solid var(--border-charcoal);
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.info-card {
+    background: var(--panel-charcoal);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-charcoal);
+}
+
+.info-card h3 {
+    color: var(--text-secondary-dark);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+    color: var(--text-secondary-dark);
+}
+
+.info-row .value {
+    color: var(--text-primary-glow);
+}
+
+.info-row .value.active {
+    color: var(--brand-active);
+}
+
+/* === ENHANCED BACKGROUND TYPING EFFECT === */
+.typing-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.typing-element {
+    position: absolute;
+    font-size: 48px;
+    font-weight: bold;
+    color: rgba(234, 234, 234, 0.5);
+    font-family: var(--font-main);
+    padding: 15px 30px;
+    white-space: nowrap;
+    opacity: 0;
+    text-shadow: 
+        0 0 15px rgba(0, 145, 255, 0.7),
+        0 0 30px rgba(0, 145, 255, 0.4);
+    transition: opacity 2s ease;
+    animation: float 25s linear infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) rotate(0); }
+    25% { transform: translate(100px, 50px) rotate(1deg); }
+    50% { transform: translate(200px, 0) rotate(0); }
+    75% { transform: translate(100px, -50px) rotate(-1deg); }
+    100% { transform: translate(0, 0) rotate(0); }
+}
+
+.typing-element.visible {
+    opacity: 0.5;
+}
+
+/* === CONTENT IMPROVEMENTS === */
+.content-section {
+    background: rgba(26, 26, 26, 0.6);
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.content-section h2 {
+    color: var(--text-primary-glow);
+    margin-bottom: 15px;
+    font-size: 1.8rem;
+}
+
+.content-section p {
+    color: var(--text-secondary-dark);
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+/* === CONTROL BUTTONS === */
+.control-btn {
+    background: var(--brand-active);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-main);
+    margin-right: 10px;
+    transition: opacity 0.3s;
+}
+
+.control-btn:hover {
+    opacity: 0.9;
+}
