@@ -3,254 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marco Resmann - De-Vision 014</title>
+    <title>MAG MAG MAGAZINE - Issue 001</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@500&display=swap" rel="stylesheet">
     <style>
-        /* --- Root Variables for Easy Theming --- */
         :root {
-            --background-color: #000;
-            --base-text-color: #1a1a1a;
-            --poster-background: #dcdbd9;
+            --background-color: #111;
+            --header-footer-text: rgba(255, 255, 255, 0.9);
             
-            /* Gradient Colors from the Poster */
-            --color-blob-1: #a9b4c8; /* Dusty Blue */
-            --color-blob-2: #8a9cb7; /* Deeper Blue */
-            --color-blob-3: #e0dcd1; /* Warm Off-White */
-            
-            --font-main: 'Inter', sans-serif;
-        }
+            /* Font Families */
+            --font-display: 'Bebas Neue', cursive;
+            --font-ui: 'Roboto', sans-serif;
 
-        /* --- Base & Body Styles --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+            /* Effect Colors */
+            --color-frosted-text: rgba(255, 255, 255, 0.5);
+            --color-frosted-bg: rgba(220, 220, 220, 0.15);
+            --color-cutout-text: #000;
         }
 
         body {
-            font-family: var(--font-main);
             background-color: var(--background-color);
-            color: var(--base-text-color);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            margin: 0;
             padding: 2rem;
-        }
-
-        /* --- Main Poster Container & Layout --- */
-        .poster-container {
-            position: relative;
-            width: 100%;
-            max-width: 700px; /* A good width for poster display */
-            aspect-ratio: 1 / 1.414; /* A-series paper aspect ratio */
-            background-color: var(--poster-background);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto 1fr auto;
-            padding: 4rem;
-            overflow: hidden; /* This is crucial to contain the blobs */
-        }
-        
-        /* --- The Ethereal, Animated Gradient Background --- */
-        .gradient-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             overflow: hidden;
-            filter: blur(80px); /* The magic happens here */
-            z-index: 0;
         }
 
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            mix-blend-mode: multiply; /* Blends the colors nicely */
-            opacity: 0.8;
-            animation: drift 25s infinite alternate ease-in-out;
-        }
-
-        .blob1 {
-            width: 400px;
-            height: 400px;
-            top: -50px;
-            left: -100px;
-            background: var(--color-blob-1);
-        }
-        
-        .blob2 {
-            width: 350px;
-            height: 350px;
-            top: 10%;
-            left: 40%;
-            background: var(--color-blob-2);
-            animation-delay: -8s;
-            animation-duration: 20s;
-        }
-
-        .blob3 {
-            width: 300px;
-            height: 300px;
-            bottom: -150px;
-            right: -100px;
-            background: var(--color-blob-3);
-            animation-delay: -15s;
-            animation-duration: 30s;
-        }
-
-        @keyframes drift {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            100% {
-                transform: translate(40px, 60px) scale(1.2);
-            }
-        }
-        
-        /* --- Subtle Grain Overlay --- */
-        .grain-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAMAAAAp4XiGAAAAA1BMVEX///+nxBvIAAAAIElEQVR42mP4BwYY/4GBgYWBgYGBgQE2kn8ZECIEGABGAgAyQQY1KgCiYAAAAABJRU5ErkJggg==');
-            opacity: 0.08;
-            z-index: 1;
-        }
-
-        /* --- Typography & Content Styling --- */
-        .poster-container > * {
+        .magazine-cover {
             position: relative;
-            z-index: 2; /* Ensure content is above the grain and background */
+            width: 100%;
+            max-width: 650px;
+            aspect-ratio: 4 / 5;
+            background-color: #000;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            overflow: hidden;
+            border-radius: 4px;
+            /* This enables the 3D space for the parallax effect */
+            transform-style: preserve-3d;
+            perspective: 1000px;
         }
 
-        .event-header {
-            grid-column: 2 / 3;
-            grid-row: 1 / 2;
-            text-align: right;
-            font-weight: 700;
-            font-size: 1.1rem;
-            line-height: 1.2;
-            align-self: start;
-        }
-        
-        .date {
-            grid-column: 2 / 3;
-            grid-row: 2 / 3;
-            text-align: right;
-            align-self: center;
-            transform: translateY(-4rem);
+        .cover-image {
+            position: absolute;
+            top: -5%; left: -5%; /* Slightly larger to allow for movement */
+            width: 110%;
+            height: 110%;
+            object-fit: cover;
+            object-position: center 30%;
+            filter: blur(1.5px) brightness(0.95);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        .artist-name {
-            grid-column: 1 / 3;
-            grid-row: 2 / 3;
-            align-self: center;
-            font-weight: 700;
-            font-size: 6rem;
-            line-height: 1.0;
-            letter-spacing: -0.03em;
+        .overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 2rem;
+            font-family: var(--font-ui);
+            color: var(--header-footer-text);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
-        
-        .record-labels {
-            grid-column: 2 / 3;
-            grid-row: 2 / 3;
-            align-self: center;
-            text-align: right;
+
+        .header, .footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             font-size: 0.9rem;
-            line-height: 1.4;
-            transform: translateY(4.5rem);
         }
 
-        .event-footer {
-            grid-column: 2 / 3;
-            grid-row: 3 / 4;
-            align-self: end;
-            text-align: right;
+        .title-stack {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            /* Move the text stack slightly forward for parallax */
+            transform: translateZ(40px);
+        }
+
+        .title {
+            font-family: var(--font-display);
+            font-size: clamp(8rem, 25vw, 14rem);
+            line-height: 0.8;
+            letter-spacing: 0.03em;
+            text-align: center;
+            width: 100%;
+        }
+
+        .title.cutout {
+            color: var(--color-cutout-text);
+            /* This blend mode creates the dark, 'stenciled' look */
+            mix-blend-mode: multiply;
         }
         
-        .event-footer h2 {
-            font-weight: 700;
-            font-size: 1.8rem;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-        }
-        
-        .event-footer .details p {
-            font-size: 0.8rem;
-            line-height: 1.5;
-        }
-        
-        /* --- Responsive Adjustments --- */
-        @media (max-width: 600px) {
-            body {
-                padding: 1rem;
-            }
-            .poster-container {
-                padding: 2rem;
-            }
-            .artist-name {
-                font-size: 4rem;
-            }
-            .event-footer h2 {
-                font-size: 1.5rem;
-            }
-            .record-labels {
-                 transform: translateY(3.5rem);
-            }
-        }
-        @media (max-width: 400px) {
-             .artist-name {
-                font-size: 3rem;
-            }
-             .record-labels {
-                 display: none; /* Hide for very small screens to avoid clutter */
-            }
+        .title.frosted {
+            color: var(--color-frosted-text);
+            background-color: var(--color-frosted-bg);
+            /* The key to the frosted glass effect */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px); /* For Safari */
+            border-radius: 8px;
         }
 
     </style>
 </head>
 <body>
 
-    <div class="poster-container">
-        <!-- Background Elements -->
-        <div class="gradient-background">
-            <div class="blob blob1"></div>
-            <div class="blob blob2"></div>
-            <div class="blob blob3"></div>
-        </div>
-        <div class="grain-overlay"></div>
+    <div class="magazine-cover" id="cover">
+        <img src="https://images.unsplash.com/photo-1554151228-14d9def656e4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=986&q=80" alt="Portrait of a woman" class="cover-image" id="coverImage">
 
-        <!-- Content Elements -->
-        <header class="event-header">
-            <p>De—<br>Vision<br>014</p>
-        </header>
-
-        <p class="date">24-4-15</p>
-
-        <h1 class="artist-name">Marco<br>Resmann</h1>
-
-        <div class="record-labels">
-            <p>Mobilee</p>
-            <p>Moon Harbour</p>
-            <p>Watergate Records</p>
+        <div class="overlay" id="overlayText">
+            <header class="header">
+                <span>Mag Mag Magazine - Issue 001</span>
+                <span>Jan-20</span>
+            </header>
+            <footer class="footer">
+                <span></span> <!-- Spacer -->
+                <span>Buy It - Read It - Frame It</span>
+            </footer>
         </div>
 
-        <footer class="event-footer">
-            <h2>Vnc<br>Brg</h2>
-            <div class="details">
-                <p>From 11.30 PM</p>
-                <p>Limited capacity</p>
-                <p>Ingresso riservato ai soli soci</p>
-            </div>
-        </footer>
-
+        <div class="title-stack" id="titleStack">
+            <div class="title cutout">MAG</div>
+            <div class="title frosted">MAG</div>
+            <div class="title frosted">MAG</div>
+        </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cover = document.getElementById('cover');
+            
+            // Check if the element exists to avoid errors
+            if (!cover) {
+                console.error('Magazine cover element not found.');
+                return;
+            }
+
+            const coverImage = document.getElementById('coverImage');
+            const overlayText = document.getElementById('overlayText');
+            const titleStack = document.getElementById('titleStack');
+
+            const MAX_ROTATION = 6; // Max rotation in degrees
+            const MAX_TRANSLATION = 15; // Max translation in pixels
+
+            cover.addEventListener('mousemove', (e) => {
+                const rect = cover.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const width = rect.width;
+                const height = rect.height;
+
+                // Calculate mouse position from center (-0.5 to 0.5)
+                const mouseX = (x / width) - 0.5;
+                const mouseY = (y / height) - 0.5;
+
+                // Calculate rotation and translation values
+                const rotateY = mouseX * MAX_ROTATION * 2;
+                const rotateX = -mouseY * MAX_ROTATION * 2;
+
+                const translateX = mouseX * MAX_TRANSLATION;
+                const translateY = mouseY * MAX_TRANSLATION;
+
+                // Apply transforms
+                cover.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                
+                if(coverImage) coverImage.style.transform = `translateX(${-translateX}px) translateY(${-translateY}px)`;
+                if(overlayText) overlayText.style.transform = `translateX(${translateX * 0.6}px) translateY(${translateY * 0.6}px)`;
+                if(titleStack) titleStack.style.transform = `translateZ(40px) translateX(${translateX}px) translateY(${translateY}px)`;
+            });
+
+            cover.addEventListener('mouseleave', () => {
+                // Reset transforms on mouse leave
+                cover.style.transform = 'rotateX(0deg) rotateY(0deg)';
+                if(coverImage) coverImage.style.transform = 'translateX(0px) translateY(0px)';
+                if(overlayText) overlayText.style.transform = 'translateX(0px) translateY(0px)';
+                if(titleStack) titleStack.style.transform = 'translateZ(40px) translateX(0px) translateY(0px)';
+            });
+        });
+    </script>
 
 </body>
 </html>
